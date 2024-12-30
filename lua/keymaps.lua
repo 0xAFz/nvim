@@ -7,19 +7,19 @@ vim.keymap.set("n", "<leader>ff", tbuilt.find_files, { desc = "Telescope find fi
 vim.keymap.set("n", "<leader>fg", tbuilt.live_grep, { desc = "Telescope live grep" })
 
 -- debugging
-local dap = require('dap')
-vim.keymap.set("n", "<F2>", function() dap.step_into() end, { desc = "Debugger step into" })
-vim.keymap.set("n", "<F3>", function() dap.step_over() end, { desc = "Debugger step over" })
-vim.keymap.set("n", "<F4>", function() dap.step_out() end, { desc = "Debugger step out" })
-vim.keymap.set("n", "<F5>", function() dap.continue() end, { desc = "Debugger continue" })
-vim.keymap.set("n", "<Leader>b", function() dap.toggle_breakpoint() end, { desc = "Debugger toggle breakpoint" })
-vim.keymap.set("n", "<F6>", function() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
-    { desc = "Debugger set conditional breakpoint" })
-vim.keymap.set("n", "<F7>", function() dap.terminate() end, { desc = "Debugger reset" })
-vim.keymap.set("n", "<F8>", function() dap.run_last() end, { desc = "Debugger run last" })
+-- local dap = require('dap')
+-- vim.keymap.set("n", "<F2>", function() dap.step_into() end, { desc = "Debugger step into" })
+-- vim.keymap.set("n", "<F3>", function() dap.step_over() end, { desc = "Debugger step over" })
+-- vim.keymap.set("n", "<F4>", function() dap.step_out() end, { desc = "Debugger step out" })
+-- vim.keymap.set("n", "<F5>", function() dap.continue() end, { desc = "Debugger continue" })
+-- vim.keymap.set("n", "<Leader>b", function() dap.toggle_breakpoint() end, { desc = "Debugger toggle breakpoint" })
+-- vim.keymap.set("n", "<F6>", function() dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+--     { desc = "Debugger set conditional breakpoint" })
+-- vim.keymap.set("n", "<F7>", function() dap.terminate() end, { desc = "Debugger reset" })
+-- vim.keymap.set("n", "<F8>", function() dap.run_last() end, { desc = "Debugger run last" })
 
 -- Rustaceanvim
-vim.keymap.set("n", "<leader>rdt", "<cmd>'RustLsp testables'<CR>", { desc = "Debugger testables" })
+-- vim.keymap.set("n", "<leader>rdt", "<cmd>'RustLsp testables'<CR>", { desc = "Debugger testables" })
 
 
 -- bufferline

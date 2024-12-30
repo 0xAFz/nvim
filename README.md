@@ -1,5 +1,5 @@
 # Neovim Configuration Guide
-_This is a **starter configuration** for Neovim, featuring a curated selection of the most useful plugins for **Python** and **Rust** development.
+_This is a **starter configuration** for Neovim, featuring a curated selection of the most useful plugins for **Go** and **Python** development.
 It's designed to be lightweight and easy to customize, providing a strong foundation for both beginners and experienced developers. Feel free to tweak or extend it to suit your workflow._
 
 _A basic set of key mappings is included and located in `lua/keymaps.lua`. You can review and customize these mappings to align with your personal preferences._
@@ -8,31 +8,24 @@ _A basic set of key mappings is included and located in `lua/keymaps.lua`. You c
 Before proceeding, ensure you meet the following requirements:
 
 Neovim Version: `NVIM v0.10.2`  
-Operating System: `Rocky Linux 9.4`, `PopOS 22.04`  
-
-
-
-Notes for `Mac` and `Windows` Users  
-
-__Mac Users:__ If you're struggling to optimize your workflow, don’t worry—you have plenty of money to waste. Just buy a newer Mac instead!  
-__Windows Users:__ Before searching for a real IDE, you might want to get yourself a real operating system.  
+Operating System: `Arch Linux` 
 
 ## Dependencies:
 Ensure the following dependencies are installed for a seamless experience:
 - **Ripgrep** (for Telescope):  
   ```bash
-  sudo dnf install ripgrep
+  sudo pacman -Sy ripgrep
   ```
 
 - **Python venv** (for Python-based plugins):  
   Replace `<minor>` with your Python minor version:  
   ```bash
-  sudo dnf install python3.<minor>-venv
+  sudo pacman -Sy python3.<minor>-venv
   ```
 
 - **Clipboard provider** (e.g., xclip):  
   ```bash
-  sudo dnf install xclip
+  sudo pacman -Sy xclip
   ```
 
 - **Node.js & npm** (for LSP support via `nvm`):  
@@ -59,7 +52,7 @@ Ensure the following dependencies are installed for a seamless experience:
 ## How to install: 
 ```bash
 $ cd ~/.config/nvim
-$ git clone git@github.com:pykeras/neovim.git .
+$ git clone git@github.com:0xAFz/gcp.git .
 $ nvim
 ```
 
@@ -239,6 +232,16 @@ _Rust only_
 
 - Ensure **LuaJIT** is installed.
 - Rename `~/.config/nvim/lua/plugins/avante` to `avante.lua` for `Ollama`.
+
+### Rust Support
+
+- Rename `~/.config/nvim/lua/plugins/rust` to `rust.lua`.
+- Rename `~/.config/nvim/lua/plugins/rustaceanvim` to `rustaceanvim.lua`.
+- Rename `~/.config/nvim/lua/plugins/debugging` to `debugging.lua`.
+- Uncomment Rust debugging keymaps `~/config/nvim/lua/keymaps.lua`.
+
+### Other
+- Rename `~/.config/nvim/lua/plugins/noice` to `noice.lua` for nice alerts.
 
 ---
 
