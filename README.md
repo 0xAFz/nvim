@@ -52,7 +52,7 @@ Ensure the following dependencies are installed for a seamless experience:
 ## How to install: 
 ```bash
 $ cd ~/.config/nvim
-$ git clone git@github.com:0xAFz/gcp.git .
+$ git clone git@github.com:0xAFz/nvim.git .
 $ nvim
 ```
 
@@ -242,6 +242,9 @@ _Rust only_
 
 ### Other
 - Rename `~/.config/nvim/lua/plugins/noice` to `noice.lua` for nice alerts.
+
+## Credits
+- [pykeras/neovim](https://github.com/pykeras/neovim)
 
 ---
 
