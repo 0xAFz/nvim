@@ -15,10 +15,11 @@ return {
     },
     {
         "neovim/nvim-lspconfig",
+        dependencies = { 'saghen/blink.cmp' },
         config = function()
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-            local lspconfig = require("lspconfig")
+            local original_capabilities = vim.lsp.protocol.make_client_capabilities()
+            local capabilities = require('blink.cmp').get_lsp_capabilities(original_capabilities)
+            local lspconfig = require('lspconfig')
 
             lspconfig.lua_ls.setup({
                 on_attach = function(client, bufnr)
@@ -39,11 +40,14 @@ return {
                 end,
                 on_init = function(client)
                     local root_dir = client.config.root_dir
-                    local venv_path = root_dir .. "/.venv"
-                    if vim.fn.isdirectory(venv_path) == 1 then
-                        client.config.settings.python.pythonPath = venv_path .. "/bin/python"
+                    if root_dir then
+                        local venv_path = root_dir .. "/.venv"
+                        if vim.fn.isdirectory(venv_path) == 1 then
+                            client.config.settings.python.pythonPath = venv_path .. "/bin/python"
+                        end
                     end
                 end,
+                capabilities = capabilities,
                 filetype = { "python" },
                 settings = {
                     pyright = {
@@ -51,12 +55,7 @@ return {
                     },
                     python = {
                         analysis = {
-                            typeCheckingMode = "off",
-                            diagnosticMode = "workspace",
-                            typeCheckingBehavior = "strict",
-                            reportMissingType = true,
-                            reportUnusedImport = false,
-                            reportUnusedVariable = false,
+                            ignore = { "*" },
                         },
                     },
                 },
@@ -68,11 +67,14 @@ return {
                         vim.lsp.buf.format({ async = true })
                     end, { buffer = bufnr, desc = "Format with Ruff" })
                 end,
+                capabilities = capabilities,
                 init_options = {
                     settings = {
+                        organizeImports = false,
                         showSyntaxErrors = true,
                         lint = {
-                            extendSelect = { "I" }
+                            preview = true,
+                            extendSelect = { "F", "E", "I", "C", "SIM", "B", "W" },
                         }
                     }
                 }
@@ -136,27 +138,27 @@ return {
         end
     },
     {
-        "jose-elias-alvarez/null-ls.nvim",
+        "mfussenegger/nvim-lint",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
-            local null_ls = require("null-ls")
-            null_ls.setup({
-                sources = {
-                    null_ls.builtins.diagnostics.mypy.with({
-                        extra_args = { "--strict", "--show-error-codes" },
-                    }),
+            local lint = require("lint")
+            lint.linters_by_ft = {
+                python = { "mypy" },
+            }
+            lint.config_by_ft = {
+                python = {
+                    mypy = {
+                        "--strict",
+                        "--show-error-codes",
+                    },
                 },
-                on_attach = function(client, bufnr)
-                    if client.supports_method("textDocument/formatting") then
-                        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                        vim.api.nvim_create_autocmd("BufWritePre", {
-                            group = augroup,
-                            buffer = bufnr,
-                            callback = function()
-                                vim.lsp.buf.format({ bufnr = bufnr })
-                            end,
-                        })
-                    end
+            }
+
+            vim.api.nvim_create_autocmd("BufWritePost", {
+                group = vim.api.nvim_create_augroup("lint_on_save", { clear = true }),
+                pattern = { "*.py" },
+                callback = function()
+                    lint.try_lint()
                 end,
             })
         end,
